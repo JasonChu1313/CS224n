@@ -8,6 +8,9 @@ import random
 import numpy as np
 import os.path as op
 import cPickle as pickle
+import q2_sigmoid
+import q2_gradcheck
+
 
 
 def load_saved_params():
@@ -85,7 +88,9 @@ def sgd(f, x0, step, iterations, postprocessing=None, useSaved=False,
 
         cost = None
         ### YOUR CODE HERE
-        raise NotImplementedError
+        cost,gradient = f(x)
+        x = x - step * gradient
+
         ### END YOUR CODE
 
         if iter % PRINT_EVERY == 0:
@@ -132,7 +137,11 @@ def your_sanity_checks():
     """
     print "Running your sanity checks..."
     ### YOUR CODE HERE
-    raise NotImplementedError
+    t1 = sgd(q2_gradcheck.sigmoid_function,np.array([2.0]),0.01,1000,PRINT_EVERY=100)
+    print "test 1 result:", t1
+    #assert abs(t1) <= 1e-3
+
+    
     ### END YOUR CODE
 
 
